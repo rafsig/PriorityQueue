@@ -40,6 +40,21 @@ public class AddItemToQueueTest {
 	}
 	
 	@Test
+	public void addTwoItemsToQueue() throws Exception {
+		int priority = 1;
+		int item = 10;
+		int item2 = 11;
+		addItemToQueue.execute(priority, item);
+		addItemToQueue.execute(priority, item2);
+		Map<Integer, List<QueueItem<Integer>>> items = priorityQueue.getQueue();
+		List<QueueItem<Integer>> priorityItems = items.get(priority);
+		assertEquals(2 ,priorityItems.size());
+		assertEquals(item , priorityItems.get(0).getItem());
+		assertEquals(item2 , priorityItems.get(1).getItem());
+		
+	}
+	
+	@Test
 	public void addMoreItemsThanTheQueueCanHoldThrowsException() throws Exception {
 		for(int i = 1; i <= 10; i++) {
 			addItemToQueue.execute(i, i);
