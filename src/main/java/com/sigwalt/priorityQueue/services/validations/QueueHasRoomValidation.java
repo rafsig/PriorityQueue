@@ -1,11 +1,6 @@
 package com.sigwalt.priorityQueue.services.validations;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sigwalt.priorityQueue.model.PriorityQueue;
-import com.sigwalt.priorityQueue.model.QueueItem;
-import com.sigwalt.priorityQueue.services.rules.addToQueue.AddToQueueRules;
 
 public class QueueHasRoomValidation<T> extends Validation<T> {
 
