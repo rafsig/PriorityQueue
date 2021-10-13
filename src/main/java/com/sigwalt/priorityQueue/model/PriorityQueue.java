@@ -8,6 +8,7 @@ public class PriorityQueue <T>{
 	
 	private Map<Integer, List<QueueItem<T>>> queue;
 	private int maxSize;
+	private int test;
 	
 	public PriorityQueue(int maxSize){
 		this.queue = new HashMap<Integer, List<QueueItem<T>>>();
