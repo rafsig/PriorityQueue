@@ -1,7 +1,6 @@
 package priorityQueue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import com.sigwalt.priorityQueue.model.PriorityQueue;
 import com.sigwalt.priorityQueue.model.QueueItem;
-import com.sigwalt.priorityQueue.services.AddItemToQueue;
 import com.sigwalt.priorityQueue.services.DequeueItem;
 
 public class DequeueItemTest {

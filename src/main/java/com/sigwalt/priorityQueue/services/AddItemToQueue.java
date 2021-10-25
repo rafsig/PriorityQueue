@@ -1,10 +1,6 @@
 package com.sigwalt.priorityQueue.services;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sigwalt.priorityQueue.model.PriorityQueue;
-import com.sigwalt.priorityQueue.model.QueueItem;
 import com.sigwalt.priorityQueue.services.rules.addToQueue.AddToQueueRules;
 import com.sigwalt.priorityQueue.services.rules.addToQueue.DoesntHavePriority;
 import com.sigwalt.priorityQueue.services.rules.addToQueue.HasPriority;

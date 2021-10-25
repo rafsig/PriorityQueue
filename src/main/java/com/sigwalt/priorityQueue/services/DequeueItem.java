@@ -1,15 +1,9 @@
 package com.sigwalt.priorityQueue.services;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sigwalt.priorityQueue.model.PriorityQueue;
 import com.sigwalt.priorityQueue.model.QueueItem;
 import com.sigwalt.priorityQueue.services.rules.dequeue.GetNextPriority;
 import com.sigwalt.priorityQueue.services.rules.dequeue.RemoveItem;
-import com.sigwalt.priorityQueue.services.rules.dequeue.updatePriorityCounting.PriorityCountingEqualsThrottling;
-import com.sigwalt.priorityQueue.services.rules.dequeue.updatePriorityCounting.PriorityCountingLessThanThrottling;
-import com.sigwalt.priorityQueue.services.rules.dequeue.updatePriorityCounting.UpdatePriorityCountingRules;
 import com.sigwalt.priorityQueue.services.validations.QueueIsNotEmptyValidation;
 import com.sigwalt.priorityQueue.services.validations.Validation;
 
