@@ -1,6 +1,10 @@
 package com.sigwalt.priorityQueue.services;
 
-import com.sigwalt.priorityQueue.model.PriorityQueue;
+import java.util.List;
+import java.util.Map;
+
+import com.sigwalt.priorityQueue.model.QueueItem;
+import com.sigwalt.priorityQueue.model.QueueParameters;
 import com.sigwalt.priorityQueue.services.rules.addToQueue.AddToQueueRules;
 import com.sigwalt.priorityQueue.services.rules.addToQueue.DoesntHavePriority;
 import com.sigwalt.priorityQueue.services.rules.addToQueue.HasPriority;
@@ -9,17 +13,17 @@ import com.sigwalt.priorityQueue.services.validations.QueueHasRoomValidation;
 
 public class AddItemToQueue<T>{
 	
-	private PriorityQueue<T> priorityQueue;
+	private Map<Integer, List<QueueItem<T>>> queue;
 	
-	public AddItemToQueue(PriorityQueue<T> priorityQueue){
-		this.priorityQueue = priorityQueue;
+	public AddItemToQueue(Map<Integer, List<QueueItem<T>>> priorityQueue){
+		this.queue = priorityQueue;
 	}
 	
-	public void execute(int priority, T queueItem) throws Exception {
-		new QueueHasRoomValidation<T>(priorityQueue, new PriorityIsHigherThanZeroValidation<T>(priorityQueue, null)).execute(priority);;
+	public void execute(QueueParameters<T> queueParameters) throws Exception {
+		new QueueHasRoomValidation<T>(queue, new PriorityIsHigherThanZeroValidation<T>(queue, null)).execute(queueParameters);
 		
-		AddToQueueRules<T> rules = new HasPriority<T>(new DoesntHavePriority<T>(null));
-		rules.execute(priorityQueue, priority, queueItem);
+		AddToQueueRules<T> rules = new HasPriority<T>(queue, new DoesntHavePriority<T>(queue, null));
+		rules.execute(queueParameters);
 	}
 	
 }

@@ -8,15 +8,15 @@ import com.sigwalt.priorityQueue.model.QueueItem;
 
 public class DoesntHavePriority<T> extends AddToQueueRules<T> {
 	
-	public DoesntHavePriority(AddToQueueRules<T> nextRule) {
-		super(nextRule);
+	public DoesntHavePriority(Map<Integer,List<QueueItem<T>>> queue, AddToQueueRules<T> nextRule) {
+		super(queue, nextRule);
 	}
 
 	@Override
-	public boolean rule(Map<Integer, List<QueueItem<T>>> queue, int priority, T item) {
+	public boolean rule(Map<Integer, List<QueueItem<T>>> queue, QueueItem<T> queueItem) {
 		List<QueueItem<T>> priorityList = new ArrayList<QueueItem<T>>();
-		priorityList.add(new QueueItem<T>(item, priority));
-		queue.put(priority, priorityList);
+		priorityList.add(queueItem);
+		queue.put(queueItem.getPriority(), priorityList);
 		return true;
 	}
 

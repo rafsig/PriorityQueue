@@ -2,6 +2,8 @@ package com.sigwalt.priorityQueue.services.rules.dequeue.nextPriorityDefinition;
 
 import java.util.Map;
 
+import com.sigwalt.priorityQueue.model.QueueParameters;
+
 public abstract class DetermineNextPriorityRules<T> {
 
 	
@@ -14,10 +16,10 @@ public abstract class DetermineNextPriorityRules<T> {
 		this.nextRule = nextRule;
 	}
 
-	public int execute(int nextPriority) {
-		int priority = rule(nextPriority);
+	public int execute(QueueParameters<T> queueParameters) {
+		int priority = rule(queueParameters.getNextPriority());
 		if (priority == -1 && nextRule != null) {
-			return nextRule.execute(nextPriority);
+			return nextRule.execute(queueParameters);
 		}
 		return priority;
 	}

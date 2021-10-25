@@ -3,24 +3,24 @@ package com.sigwalt.priorityQueue.services.rules.dequeue;
 import java.util.List;
 import java.util.Map;
 
-import com.sigwalt.priorityQueue.model.PriorityQueue;
+import com.sigwalt.priorityQueue.model.DequeuedItem;
 import com.sigwalt.priorityQueue.model.QueueItem;
+import com.sigwalt.priorityQueue.model.QueueParameters;
 import com.sigwalt.priorityQueue.services.rules.dequeue.updatePriorityCounting.PriorityCountingEqualsThrottling;
 import com.sigwalt.priorityQueue.services.rules.dequeue.updatePriorityCounting.PriorityCountingLessThanThrottling;
 import com.sigwalt.priorityQueue.services.rules.dequeue.updatePriorityCounting.UpdatePriorityCountingRules;
 
 public class RemoveItem<T> {
 	
-	private PriorityQueue<T> priorityQueue;
+	private Map<Integer, List<QueueItem<T>>> queue;
 
-	public RemoveItem(PriorityQueue<T> priorityQueue) {
+	public RemoveItem(Map<Integer, List<QueueItem<T>>> queue) {
 		super();
-		this.priorityQueue = priorityQueue;
+		this.queue = queue;
 	}
 
-	public QueueItem<T> execute(int nextPriority) throws Exception {
-		Map<Integer, List<QueueItem<T>>> queue = priorityQueue.getQueue();
-		Map<Integer, Integer> priorityCounting = priorityQueue.getPriorityCounting();
+	public DequeuedItem<T> execute(QueueParameters<T> queueParameters, int nextPriority) throws Exception {
+		Map<Integer, Integer> priorityCounting = queueParameters.getPriorityMap();
 		
 		int newPriorityCounting;
 		
@@ -28,20 +28,20 @@ public class RemoveItem<T> {
 		QueueItem<T> queueItem = itemsList.remove(0);
 		if(itemsList.size() == 0) {
 			queue.remove(nextPriority);
-			priorityQueue.getPriorityCounting().remove(nextPriority);
+			queueParameters.getPriorityMap().remove(nextPriority);
 		}
 		else {
 			UpdatePriorityCountingRules updatePriorityCounting = new PriorityCountingLessThanThrottling(priorityCounting, new PriorityCountingEqualsThrottling(priorityCounting, null));
 			newPriorityCounting = updatePriorityCounting.execute(nextPriority);
 			if(newPriorityCounting == 2) {
-				this.priorityQueue.setNextPriority(nextPriority + 1);
+				nextPriority++;
 			}
 			else {
-				this.priorityQueue.setNextPriority((Integer) priorityCounting.keySet().toArray()[0]);
+				nextPriority = (int) priorityCounting.keySet().toArray()[0];
 			}
 		}
-		this.priorityQueue.setCurrentSize(this.priorityQueue.getCurrentSize() - 1);
-		return queueItem;
+		
+		return new DequeuedItem<T>(queueItem, nextPriority);
 	}
 
 }

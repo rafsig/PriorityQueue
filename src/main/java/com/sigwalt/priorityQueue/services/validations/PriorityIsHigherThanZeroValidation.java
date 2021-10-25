@@ -1,16 +1,20 @@
 package com.sigwalt.priorityQueue.services.validations;
 
-import com.sigwalt.priorityQueue.model.PriorityQueue;
+import java.util.List;
+import java.util.Map;
+
+import com.sigwalt.priorityQueue.model.QueueItem;
+import com.sigwalt.priorityQueue.model.QueueParameters;
 
 public class PriorityIsHigherThanZeroValidation<T> extends Validation<T> {
 
-	public PriorityIsHigherThanZeroValidation(PriorityQueue<T> priorityQueue, Validation<T> nextValidation) {
-		super(priorityQueue, nextValidation);
+	public PriorityIsHigherThanZeroValidation(Map<Integer, List<QueueItem<T>>> queue, Validation<T> nextValidation) {
+		super(queue, nextValidation);
 	}
 
 	@Override
-	public void validation(int priority) throws Exception {
-		if(priority < 1) {
+	public void validation(QueueParameters<T> queueParameters) throws Exception {
+		if(queueParameters.getItem().getPriority() < 1) {
 			throw new Exception("Priority must be 1 or higher");
 		}
 	}

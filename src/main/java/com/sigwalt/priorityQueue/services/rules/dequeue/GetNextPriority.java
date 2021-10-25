@@ -2,7 +2,7 @@ package com.sigwalt.priorityQueue.services.rules.dequeue;
 
 import java.util.Map;
 
-import com.sigwalt.priorityQueue.model.PriorityQueue;
+import com.sigwalt.priorityQueue.model.QueueParameters;
 import com.sigwalt.priorityQueue.services.rules.dequeue.nextPriorityDefinition.NextPriorityEqualsZero;
 import com.sigwalt.priorityQueue.services.rules.dequeue.nextPriorityDefinition.NextPriorityExists;
 import com.sigwalt.priorityQueue.services.rules.dequeue.nextPriorityDefinition.NextPriorityNotFoundAndHigherExists;
@@ -10,18 +10,16 @@ import com.sigwalt.priorityQueue.services.rules.dequeue.nextPriorityDefinition.N
 
 public class GetNextPriority<T> {
 
-	private PriorityQueue<T> priorityQueue;
 
-	public GetNextPriority(PriorityQueue<T> priorityQueue) {
-		this.priorityQueue = priorityQueue;
+	public GetNextPriority() {
 	}
 
-	public int execute() {
-		Map<Integer, Integer> priorityCounting = priorityQueue.getPriorityCounting();
+	public int execute(QueueParameters<T> queueParameters) {
+		Map<Integer, Integer> priorityCounting = queueParameters.getPriorityMap();
 		int nextPriority = new NextPriorityNotFoundAndSmallerExists<T>(priorityCounting, 
 				new NextPriorityNotFoundAndHigherExists<T>(priorityCounting,
 						new NextPriorityExists<>(priorityCounting, 
-								new NextPriorityEqualsZero<>(priorityCounting, null)))).execute(priorityQueue.getNextPriority());
+								new NextPriorityEqualsZero<>(priorityCounting, null)))).execute(queueParameters);
 		
 		return nextPriority;
 	}
