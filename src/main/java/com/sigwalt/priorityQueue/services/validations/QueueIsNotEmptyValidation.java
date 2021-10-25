@@ -10,7 +10,7 @@ public class QueueIsNotEmptyValidation<T> extends Validation<T> {
 
 	@Override
 	public void validation(int priority) throws Exception {
-		if(priorityQueue.getQueue().size() == 0 ) {
+		if(priorityQueue.getCurrentSize() == 0 ) {
 			throw new Exception("QueueIsEmpty");
 		}
 	}

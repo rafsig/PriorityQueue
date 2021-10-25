@@ -40,7 +40,7 @@ public class RemoveItem<T> {
 				this.priorityQueue.setNextPriority((Integer) priorityCounting.keySet().toArray()[0]);
 			}
 		}
-		
+		this.priorityQueue.setCurrentSize(this.priorityQueue.getCurrentSize() - 1);
 		return queueItem;
 	}
 

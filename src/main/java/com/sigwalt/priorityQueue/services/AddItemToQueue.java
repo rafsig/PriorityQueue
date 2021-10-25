@@ -23,8 +23,7 @@ public class AddItemToQueue<T>{
 		new QueueHasRoomValidation<T>(priorityQueue, new PriorityIsHigherThanZeroValidation<T>(priorityQueue, null)).execute(priority);;
 		
 		AddToQueueRules<T> rules = new HasPriority<T>(new DoesntHavePriority<T>(null));
-		Map<Integer, List<QueueItem<T>>> queue = priorityQueue.getQueue();
-		rules.execute(queue, priority, queueItem);
+		rules.execute(priorityQueue, priority, queueItem);
 	}
 	
 }

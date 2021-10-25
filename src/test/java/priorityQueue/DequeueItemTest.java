@@ -25,8 +25,6 @@ public class DequeueItemTest {
 	int[] dequeueOrder =  {2, 5, 4, 11, 16, 7, 3, 19, 24, 9, 27, 30, 15, 8, 1, 31, 34, 20, 35, 22, 12, 26, 29, 13, 6, 14, 32, 17, 25, 10, 33, 21, 28, 18, 23};
 	int[] priorityOrder = {1, 1, 3,  1,  1, 3, 4 , 1, 1, 3 , 1, 1, 3, 4, 5, 1, 1, 3, 1, 3, 4, 3, 3, 4, 5, 7, 3, 4, 4, 5, 4, 5, 7, 9, 5};
 
-
-
 	@BeforeEach
 	public void setup() {
 		priorityQueue = new PriorityQueue<Integer>(priorityOrder.length);
@@ -49,7 +47,6 @@ public class DequeueItemTest {
 		itemsList.add(new QueueItem<Integer>(35, priority));
 		items.put(priority, itemsList);
 		priorityCounting.put(priority, 0);
-		
 		
 		priority = 3;
 		itemsList = new ArrayList<QueueItem<Integer>>();
@@ -100,25 +97,33 @@ public class DequeueItemTest {
 		items.put(priority, itemsList);
 		priorityCounting.put(priority, 0);
 		
-		
+		priorityQueue.setCurrentSize(dequeueOrder.length);	
 	}
 
 	@Test
 	public void allItemsAreDequedInOrder() throws Exception {
 		for(int i = 0 ; i < dequeueOrder.length; i++) {
 			QueueItem<Integer> item = dequeueItem.execute();
-			
 			assertEquals(dequeueOrder[i], item.getItem());
 			assertEquals(priorityOrder[i], item.getPriority());
 		}
 	}
 	
 	@Test
-	public void returnsNullWhenListIsEmpty() throws Exception {
+	public void throwsExceptionWhenListIsEmpty() throws Exception {
 		for(int i = 0 ; i < dequeueOrder.length; i++) {
-			QueueItem<Integer> item = dequeueItem.execute();
+			dequeueItem.execute();
 		}
 		assertThrows(Exception.class, ()-> {dequeueItem.execute();});
+	}
+	
+	@Test
+	public void listSizeDecreasesWhenItemIsDequeued() throws Exception {
+		int initialSize = priorityQueue.getCurrentSize();
+		dequeueItem.execute();
+		int finalSize = priorityQueue.getCurrentSize();
+
+		assertEquals(initialSize - 1, finalSize);
 	}
 
 }

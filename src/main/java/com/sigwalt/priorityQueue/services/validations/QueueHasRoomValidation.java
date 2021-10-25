@@ -10,8 +10,8 @@ public class QueueHasRoomValidation<T> extends Validation<T> {
 
 	@Override
 	public void validation(int priority) throws Exception {
-		if(priorityQueue.getQueue().size() >= priorityQueue.getMaxSize() ) {
-			throw new Exception("Queue reached maximum length");
+		if(priorityQueue.getCurrentSize() >= priorityQueue.getMaxSize() ) {
+			throw new Exception("Queue full\nMaxSize\t" + priorityQueue.getMaxSize() + "\nCurrentSize\t" + priorityQueue.getCurrentSize());
 		}	
 	}
 

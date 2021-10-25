@@ -8,16 +8,24 @@ public class PriorityQueue <T>{
 	
 	private Map<Integer, List<QueueItem<T>>> queue;
 	private int maxSize;
+	private int currentSize;
 	private int nextPriority;
 	private Map<Integer, Integer> priorityCounting;
 	
 	public PriorityQueue(int maxSize){
 		this.queue = new HashMap<Integer, List<QueueItem<T>>>();
 		priorityCounting = new HashMap<Integer, Integer>();
-		
+		currentSize = 0;
 		nextPriority = 0;
-		
 		this.maxSize = maxSize;
+	}
+	
+	public int getCurrentSize() {
+		return currentSize;
+	}
+
+	public void setCurrentSize(int currentSize) {
+		this.currentSize = currentSize;
 	}
 
 	public Map<Integer, List<QueueItem<T>>> getQueue() {
