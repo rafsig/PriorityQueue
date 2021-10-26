@@ -46,12 +46,14 @@ public class PriorityQueue <T>{
 	}
 	public QueueItem<T> dequeueItem() throws Exception {
 		lock.writeLock().lock();
+		DequeuedItem<T> dequeuedItem = null;
 		try {
-			DequeuedItem<T> dequeuedItem = dequeueItem.execute(new QueueParameters<T>(maxSize, currentSize, nextPriority, priorityCounting));
+			dequeuedItem = dequeueItem.execute(new QueueParameters<T>(maxSize, currentSize, nextPriority, priorityCounting));
 			this.currentSize--;
 			this.nextPriority = dequeuedItem.getNextPriority();
 			return dequeuedItem.getItem();
-		}finally {
+		}
+		finally {
 			lock.writeLock().unlock();
 		}
 	}

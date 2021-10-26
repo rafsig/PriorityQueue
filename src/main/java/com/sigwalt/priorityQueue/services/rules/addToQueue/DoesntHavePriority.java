@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.sigwalt.priorityQueue.model.QueueItem;
+import com.sigwalt.priorityQueue.model.QueueParameters;
 
 public class DoesntHavePriority<T> extends AddToQueueRules<T> {
 	
@@ -13,10 +14,12 @@ public class DoesntHavePriority<T> extends AddToQueueRules<T> {
 	}
 
 	@Override
-	public boolean rule(Map<Integer, List<QueueItem<T>>> queue, QueueItem<T> queueItem) {
+	public boolean rule(Map<Integer, List<QueueItem<T>>> queue, QueueParameters<T> queueParameters) {
 		List<QueueItem<T>> priorityList = new ArrayList<QueueItem<T>>();
+		QueueItem<T> queueItem = queueParameters.getItem();
 		priorityList.add(queueItem);
 		queue.put(queueItem.getPriority(), priorityList);
+		queueParameters.getPriorityMap().put(queueItem.getPriority(), 0);
 		return true;
 	}
 

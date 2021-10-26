@@ -18,7 +18,7 @@ public abstract class AddToQueueRules <T> {
 	}
 	
 	public void execute(QueueParameters<T> queueParameters) {
-		boolean ruleExecuted = !this.rule(queue, queueParameters.getItem());
+		boolean ruleExecuted = !this.rule(queue, queueParameters);
 		if(ruleExecuted) {
 			this.nextRule.execute(queueParameters);
 		}else {
@@ -27,6 +27,6 @@ public abstract class AddToQueueRules <T> {
 		
 	}
 	
-	public abstract boolean rule(Map<Integer, List<QueueItem<T>>> queue, QueueItem<T> queueItem);
+	public abstract boolean rule(Map<Integer, List<QueueItem<T>>> queue, QueueParameters<T> queueParameters);
 	
 }
