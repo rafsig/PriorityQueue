@@ -25,14 +25,18 @@ public class PriorityQueue <T>{
 		this.maxSize = maxSize;
 	}
 	
+	public int getMaxSize() {
+		return maxSize;
+	}
+	
 	public int getCurrentSize() {
 		return currentSize;
 	}
-
-	public void setCurrentSize(int currentSize) {
-		this.currentSize = currentSize;
-	}
 	
+	public int getNextPriority() {
+		return nextPriority;
+	}
+
 	public void addItem(QueueItem<T> item) throws Exception {
 		lock.writeLock().lock();
 		try {
@@ -41,9 +45,9 @@ public class PriorityQueue <T>{
 		}
 		finally {
 			lock.writeLock().unlock();
-		}
-		
+		}	
 	}
+	
 	public QueueItem<T> dequeueItem() throws Exception {
 		lock.writeLock().lock();
 		DequeuedItem<T> dequeuedItem = null;
@@ -57,4 +61,5 @@ public class PriorityQueue <T>{
 			lock.writeLock().unlock();
 		}
 	}
+	
 }
